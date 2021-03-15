@@ -23,8 +23,8 @@ database_file = "sqlite:///{}".format(os.path.join(project_dir, "attribute_datab
 
 app = Flask(__name__)
 toastr = Toastr(app)
-app.config["SQLALCHEMY_DATABASE_URI"] = database_file
-#app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://blwznjoaexpigs:f5062347d05f6ce0bd9aa552f08c5ad32e159e6838c43f7e16e6ebddb9f884f0@ec2-52-6-178-202.compute-1.amazonaws.com:5432/ddfaffh9g9ntns'
+#app.config["SQLALCHEMY_DATABASE_URI"] = database_file
+app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://blwznjoaexpigs:f5062347d05f6ce0bd9aa552f08c5ad32e159e6838c43f7e16e6ebddb9f884f0@ec2-52-6-178-202.compute-1.amazonaws.com:5432/ddfaffh9g9ntns'
 app.secret_key = 'super secret key'
 db = SQLAlchemy(app)
 
