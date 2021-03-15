@@ -1,0 +1,596 @@
+ti<html>
+<head>
+{{ toastr.include_jquery() }}
+    {{ toastr.include_toastr_css() }}
+    {{ toastr.message() }}
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+html
+    {
+    position: relative;
+    min-height: 100%;
+    }
+
+    body {
+  background-image: url("{{ url_for('static', filename='') }}");
+  background-attachment: fixed;
+  background-size: 300px 100px;
+  background-color: #ffffff;
+}
+
+
+</style>
+
+      <style>
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      margin-left:auto;
+      margin-right:auto;
+      width: 50%;
+      backdrop-filter: blur(10px)
+    }
+
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    #customers tr:nth-child(odd){background-color: #faebd7;}
+
+    #customers tr:hover {background-color: #ddd;}
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #1abc9c;
+      color: white;
+    }
+</style>
+ <style>
+   .buttondown {
+  background-color: #1abc9c; /* Green */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  margin-left:910px;
+  margin-bottom : 50px;
+  position: absolute;
+
+
+}
+
+.buttonUp {
+  background-color: #1abc9c; /* Green */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  margin-left:750px;
+   margin-bottom : 50px;
+  position: absolute;
+
+}
+
+ </style>
+      <style>
+          input[type = "text"] {
+        border-top-style: hidden;
+        border-right-style: hidden;
+        border-left-style: hidden;
+        border-bottom-style: groove;
+
+      }
+      </style>
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #2F4F4F	;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+      <style>
+.btn {
+  background-color: #1abc9c;
+  border: none;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+  width:100%
+}
+
+/* Darker background on mouse-over */
+.openButton:hover, .buttondown:hover , .buttonUp:hover, .btn:hover{
+  background-color: #0f705d;
+}
+.wrapper {
+  display: inline-block;
+}
+
+input[type = "text"], input[type = "submit"]
+{
+color: black;
+        font-size: 15px;
+        }
+
+</style>
+
+<style>
+      * {
+        box-sizing: border-box;
+      }
+      .openBtn {
+        display: flex;
+        justify-content: left;
+      }
+      .openButton {
+        background-color: #1abc9c; /* Green */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  margin-left:555px;
+  margin-bottom : 50px;
+  position: absolute;
+      }
+
+  input[type=date],
+       {
+        width: 200%;
+        padding: 15px;
+        margin: 5px 0 20px 0;
+        border: none;
+	border-radius: 0.5rem;
+      }
+
+ footer {
+
+    text-align: center;
+    padding: 5px;
+    background-color: #2F4F4F;
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+
+      .loginPopup {
+       display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+         left: 0;
+         top: 0;
+         width: 100%; /* Full width */
+         height: 100%; /* Full height */
+         overflow: auto; /* Enable scroll if needed */
+         background-color: rgb(0,0,0); /* Fallback color */
+         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+      .formPopup {
+        position: fixed;
+        left: 50%;
+        top: 0%;
+        transform: translate(-50%, 15%);
+        border: 0px solid #999999;
+        z-index: 1;
+        text-align: center;
+
+      }
+      .formContainer {
+        max-width: 350px;
+        padding: 20px 10px;
+        background-color: #fefefe;
+      }
+      .formContainer input[type=text],
+      .formContainer select {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 20px 0;
+        border: none;
+        background: #eee;
+	border-radius: 0.5rem;
+      }
+      .formContainer input[type=text]:focus,
+      .formContainer select:focus {
+        background-color: #ddd;
+        outline: none;
+	border-radius: 0.5rem;
+      }
+      .formContainer .btn_popup {
+        padding: 12px 20px;
+        border: none;
+        background-color: #1abc9c;
+        color: white;
+        cursor: pointer;
+        width: 50%;
+        margin-bottom: 15px;
+        font-size: 15px;
+	border-radius: 0.5rem;
+      }
+      .formContainer .cancel {
+        background-color: #cc0000;
+        color: white;
+        width: 50%;
+	color: black;
+      }
+    .formContainer .btn_popup:hover{
+    background-color: #0f705d;
+    }
+
+    .btn_popup cancel {
+        color: white;
+	color: black;
+      }
+
+    .formContainer .cancel:hover{
+    background-color: #8B0000;
+    }
+
+    </style>
+
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <form id = "form1" method="POST" action="./display">
+          <input type = "hidden", name = "filetype" value = "epc">
+          <button type="submit" form="form1"   class="btn" value="Submit" style="height:40px;width=170px">EPC CONFIG FILE</button>
+          </form>
+
+      <form id = "form2"method="POST" action="./display">
+          <input type = "hidden", name = "filetype" value = "ims">
+          <button type="submit" form="form2" class="btn"value="Submit" style="height:40px;width=170px">IMS CONFIG FILE</button>
+          </form>
+
+      <form id = "form3"method="POST" action="./display">
+          <input type = "hidden", name = "filetype" value = "nps">
+          <button type="submit" form="form3" class="btn"value="Submit" style="height:40px;width=170px">NPS CONFIG FILE</button>
+          </form>
+
+      <form id = "form4" method="POST" action="./display">
+          <input type = "hidden", name = "filetype" value = "enum">
+          <button type="submit" form="form4"  class="btn"value="Submit" style="height:40px;width=170px">ENUM CONFIG FILE</button>
+          </form>
+
+        <!--form id = "form5" method="POST" action="./newFileUpload">
+          <input type = "hidden", name = "filetype" value = "newFileUpload">
+          <button type="submit" form="form5"  class="btn"value="Submit" style="height:40px;width=170px"><i class="fa fa-upload"></i> UPLOAD FILE</button>
+          </form-->
+</div>
+
+<div id="main">
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; File Menu</span>
+    <h1 align="center"><u>Welcome to Configuration File Generator</u></h1>
+
+    {%if filetype == None %}
+    <h3 align="center">Please select a file from file menu!!!</h3>
+    <h4><hr></h4>
+
+
+    {% endif %}
+    <p></p>
+
+    {%if filetype != None %}
+    <h3 align="center">Currently viewing <strong>{{filetype}}</strong> configuration file</h3>
+     <h4><hr></h4>
+    <div class="wrapper">
+     <form id = "downldform"method="GET" Method = "POST" action="{{url_for('download_file')}}" style="display: inline">
+          <input type="hidden" value = "{{filetype}}" name = "filetype">
+
+           <button class="buttondown"   form="downldform" onclick="opendownldForm()" ><strong><i class="fa fa-download"></i> Download</strong></button>
+    </form>
+    <form id = "uploadform" method="GET" Method = "POST" action="./upload" style="display: inline">
+
+          <input type="hidden" value = "{{filetype}}" name = "filetype">
+
+    <button class="buttonUp" form="uploadform"><strong><i class="fa fa-upload"></i> Compare</strong></button>
+    </form>
+      <button class="openButton" onclick="openForm()"><strong><i class="fa fa-plus"></i> Add Parameter</strong></button>
+    </div>
+    <p></p>
+    <br>
+    <p></p>
+    <p></p>
+    <p></p>
+    <table id="customers">
+        <thead>
+
+        <th>Parameters</th>
+        <th>Values</th>
+        <th>New Value</th>
+        <th>Commit</th>
+        <th>Remove</th>
+
+
+        </thead>
+      {% for epc in epcs %}
+
+        <tr>
+          <td>
+
+            {{epc.AttName}}
+
+          </td>
+           <td>
+
+            {{epc.AttValue}}
+
+          </td>
+            <form method="POST" method = "GET" action="./update" style="display: inline">
+          <td>
+
+                <input type="hidden" value = "{{filetype}}" name = "filetype">
+              <input type="hidden" value="{{epc.AttValue}}" name="oldAttValue">
+               <input type="hidden" value="{{epc.AttName}}" name="AttName">
+                {% if epc.AttName[0] == '#' %}
+                 <input type="hidden" value="{{epc.AttValue}}" name="newAttValue" >
+                {% endif %}
+                {% if epc.AttName[0] != '#' %}
+                    {% if 'DATE' in epc.AttName %}
+                    <input type="date" class="input" value="{{epc.AttValue}}" name="newAttValue" required>
+                    {% else %}
+                    <input type="text" class="input" value="{{epc.AttValue}}" name="newAttValue" >
+                    {% endif %}
+                {% endif %}
+          </td>
+                <td>
+                    {% if epc.AttName[0] == '#' %}
+                 <input type="hidden" value="Update" style="display: inline" >
+                {% endif %}
+                {% if epc.AttName[0] != '#' %}
+                 <input type="submit" value="Update" style="display: inline" >
+                {% endif %}
+
+                </td>
+
+            </form>
+
+
+          <td>
+            <form method="POST" action="./delete" style="display: inline">
+                 <input type="hidden" value = "{{filetype}}" name = "filetype">
+              <input type="hidden" value="{{epc.AttName}}" name="AttName">
+              <input type="submit" value="Delete">
+            </form>
+
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <p></p>
+    <br>
+    <p></p>
+    <br>
+    <p></p>
+    <br>
+
+
+
+
+
+
+
+
+
+    <div class="loginPopup" id="popupForm">
+      <div class="formPopup" >
+        <form method="POST" action="./addtoDB" class="formContainer">
+            <h2><u>Add Parameter</u></h2>
+          <label for="AttName">
+            <strong>Parameter Name</strong>
+          </label>
+          <input type="text"  placeholder="Parameter Name" name="AttName" required>
+            <input type="hidden" value = "{{filetype}}" name = "filetype">
+          <label for="psw">
+            <strong>Parameter Value</strong>
+          </label>
+          <input type="text" id="psw" placeholder="Parameter value" name="AttValue" required>
+	        <label for="newAttrType ">
+            <strong>Parameter Type</strong>
+          </label>
+           <select name = newAttrType value = "Select Attribute Type" required>
+               <option value="">Please Select Type</option>
+        <option value="NUMBER">NUMBER</option>
+         <option value="NAME">NAME</option>
+               <option value = "DATE">DATE</option>
+         <option value="IPv4">IPv4</option>
+        <option value="FILE_PATH">FILE_PATH</option>
+         <option value="YES/NO">YES/NO</option>
+         <option value="IPv6">IPv6</option>
+               <option value="Not Available">Not Available</option>
+   	 </select>
+
+          <button type="submit" class="btn_popup"><strong><i class="fa fa-plus"></i> Add to file</strong></button>
+          <button type="button" class="btn_popup cancel" onclick="closeForm()"><strong><i class="fa fa-close"></i> Close</strong></button>
+        </form>
+      </div>
+    </div>
+
+    <div class="loginPopup" id="dwnlForm">
+      <div class="formPopup" >
+          <form class="formContainer">
+        <h4>Config file has been downloaded successfully..!!!</h4>
+          <button type="button" class="btn_popup cancel" onclick="closedownldForm()"><strong><i class="fa fa-close"></i> Close</strong></button>
+          </form>
+      </div>
+    </div>
+
+
+
+
+
+  <!--h3 align="center">Add Attribute</h3>
+
+    <table id = "customers">
+        <form method="POST" action="./addtoDB">
+        <thead>
+        <th>Parameter Name</th>
+        <th>Parameter Value</th>
+        <th>Value Type</th>
+        <th>Add to Table</th>
+        </thead>
+      <tr>
+          <td>
+              <input type="text" class = "input" name="AttName" required>
+              <input type="hidden" value = "{{filetype}}" name = "filetype">
+          </td>
+          <td><input type="text" class = "input" name="AttValue" required></td>
+          <td><select id = "foo" name = newAttrType value = "Select Attribute Type">
+        <option value="NUMBER">NUMBER</option>
+         <option value="NAME">NAME</option>
+         <option value="IPv4">IPv4</option>
+        <option value="FILE_PATH">FILE_PATH</option>
+         <option value="YES/NO">YES/NO</option>
+         <option value="IPv6">IPv6</option>
+    </select>
+
+          </td>
+
+        <td>
+      <input type="submit" value="Insert into File"></td>
+
+          </tr>
+     </form>
+    </table-->
+
+
+
+ {{ toastr.include_toastr_js() }}
+{% endif %}
+  <div class="sub_div">
+  <footer>
+   <p>©2021 Tata Consultancy Services Limited. All Rights Reserved.</p>
+  <!--p>Designed By: Siddhant Jain | Akshay Lahudkar</p-->
+  <a href="https://www.tcs.com" style="color: white">Visit Us @ www.tcs.com</a>
+</footer>
+    </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var scrollpos = sessionStorage.getItem('scrollpos');
+        if (scrollpos) {
+            window.scrollTo(0, scrollpos);
+            sessionStorage.removeItem('scrollpos');
+        }
+    });
+
+    window.addEventListener("beforeunload", function (e) {
+        sessionStorage.setItem('scrollpos', window.scrollY);
+    });
+</script>
+
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+<script>
+      function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+        window.scrollBy(0, 50000);
+
+      }
+      function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+        window.scrollBy(0, -50000);
+      }
+
+</script>
+    <!--script>
+
+      function opendownldForm() {
+        document.getElementById("dwnlForm").style.display = "block";
+        window.scrollBy(0, 50000);
+
+      }
+      function closedownldForm() {
+        document.getElementById("dwnlForm").style.display = "none";
+        window.scrollBy(0, -50000);
+      }
+    </script-->
+
+</div>
+<script>
+      function reloadForm() {
+
+      }
+
+    </script>
+
+  </body>
+</html>

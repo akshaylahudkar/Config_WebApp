@@ -1,0 +1,379 @@
+<html>
+<head>
+{{ toastr.include_jquery() }}
+    {{ toastr.include_toastr_css() }}
+    {{ toastr.message() }}
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    body {
+  background-image: url("{{ url_for('static', filename='') }}");
+  background-attachment: fixed;
+  background-size: 300px 100px;
+  background-color: #ffffff;
+}
+</style>
+
+      <style>
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      margin-left:auto;
+      margin-right:auto;
+      width: 50%;
+      backdrop-filter: blur(10px)
+    }
+
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    #customers tr:nth-child(odd){background-color: #faebd7;}
+
+    #customers tr:hover {background-color: #ddd;}
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: center;
+      background-color: #1abc9c;
+      color: white;
+    }
+</style>
+ <style>
+   .button {
+  background-color: #1abc9c; /* Green */
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  margin-left:910px;
+  margin-bottom : 50px;
+  position: absolute;
+
+
+}
+
+.buttonUp {
+  background-color: #1abc9c; /* Green */
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  margin-left:750px;
+   margin-bottom : 50px;
+  position: absolute;
+
+}
+
+ </style>
+      <style>
+          .input {
+        border-top-style: hidden;
+        border-right-style: hidden;
+        border-left-style: hidden;
+        border-bottom-style: groove;
+
+      }
+      </style>
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #2F4F4F	;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+      <style>
+.btn {
+  background-color: #1abc9c;
+  border: none;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+  width:100%
+}
+
+/* Darker background on mouse-over */
+.button:hover , .buttonUp:hover, .btn:hover{
+  background-color: #0f705d;
+}
+.wrapper {
+  display: inline-block;
+}
+
+label {
+  background-color: #1abc9c;
+  color: black;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+/* Darker background on mouse-over */
+label:hover{
+  background-color: #0f705d;
+}
+</style>
+
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <form id = "form1" method="POST" action="./display">
+          <input type = "hidden", name = "filetype" value = "epc">
+          <button type="submit" form="form1"   class="btn" value="Submit" style="height:40px;width=170px">EPC CONFIG FILE</button>
+          </form>
+
+      <form id = "form2"method="POST" action="./display">
+          <input type = "hidden", name = "filetype" value = "ims">
+          <button type="submit" form="form2" class="btn"value="Submit" style="height:40px;width=170px">IMS CONFIG FILE</button>
+          </form>
+
+      <form id = "form3"method="POST" action="./display">
+          <input type = "hidden", name = "filetype" value = "nps">
+          <button type="submit" form="form3" class="btn"value="Submit" style="height:40px;width=170px">NPS CONFIG FILE</button>
+          </form>
+
+      <form id = "form4" method="POST" action="./display">
+          <input type = "hidden", name = "filetype" value = "enum">
+          <button type="submit" form="form4"  class="btn"value="Submit" style="height:40px;width=170px">ENUM CONFIG FILE</button>
+          </form>
+</div>
+
+<div id="main">
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; File Menu</span>
+    <h1 align="center"><u>Welcome to Configuration File Generator</u></h1>
+
+    {%if filetype == None %}
+    <h3 align="center">Please select a file from file menu!!!</h3>
+    <h4><hr></h4>
+    {% endif %}
+    <p></p>
+
+    {%if filetype != None %}
+    <h3 align="center">Currently viewing {{filetype}} configuration file</h3>
+     <h4><hr></h4>
+    <div class="wrapper">
+     <form id = "downldform"method="GET" Method = "POST" action="./line" style="display: inline">
+          <input type="hidden" value = "{{filetype}}" name = "filetype">
+
+           <button class="button" form="downldform"><i class="fa fa-download"></i> Download</button>
+    </form>
+    <form id = "uploadform" method="GET" Method = "POST" action="./upload" style="display: inline">
+
+          <input type="hidden" value = "{{filetype}}" name = "filetype">
+
+    <button class="buttonUp" form="uploadform"><i class="fa fa-upload"></i> Compare</button>
+    </form>
+          <!--div class="openBtn">
+      <button class="openButton" onclick="openForm()"><strong>Open Form</strong></button>
+    </div-->
+    </div>
+    <p></p>
+    <br>
+    <p></p>
+    <p></p>
+    <p></p>
+    <table id="customers">
+        <thead>
+
+        <th>Parameters</th>
+        <th>Values</th>
+        <th>New Value</th>
+        <th>Commit</th>
+        <th>Remove</th>
+
+
+        </thead>
+      {% for epc in epcs %}
+
+        <tr>
+          <td>
+
+            {{epc.AttName}}
+
+          </td>
+           <td>
+
+            {{epc.AttValue}}
+
+          </td>
+          <td>
+            <form method="POST" method = "GET" action="./update" style="display: inline">
+                <input type="hidden" value = "{{filetype}}" name = "filetype">
+              <input type="hidden" value="{{epc.AttValue}}" name="oldAttValue">
+               <input type="hidden" value="{{epc.AttName}}" name="AttName">
+                {% if epc.AttName[0] == '#' %}
+                 <input type="hidden" value="{{epc.AttValue}}" name="newAttValue" >
+                {% endif %}
+                {% if epc.AttName[0] != '#' %}
+                 <input type="text" class="input" value="{{epc.AttValue}}" name="newAttValue" >
+                {% endif %}
+
+
+            </td>
+                <td>
+                    {% if epc.AttName[0] == '#' %}
+                 <input type="hidden" value="Update" style="display: inline" >
+                {% endif %}
+                {% if epc.AttName[0] != '#' %}
+                 <input type="submit" value="Update" style="display: inline" >
+                {% endif %}
+
+                </td>
+
+            </form>
+
+
+          <td>
+            <form method="POST" action="./delete" style="display: inline">
+                 <input type="hidden" value = "{{filetype}}" name = "filetype">
+              <input type="hidden" value="{{epc.AttName}}" name="AttName">
+              <input type="submit" value="Delete">
+            </form>
+
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  <h3 align="center">Add Attribute</h3>
+
+    <table id = "customers">
+        <form method="POST" action="./addtoDB">
+        <thead>
+        <th>Parameter Name</th>
+        <th>Parameter Value</th>
+        <th>Value Type</th>
+        <th>Add to Table</th>
+        </thead>
+      <tr>
+          <td>
+              <input type="text" class = "input" name="AttName" required>
+              <input type="hidden" value = "{{filetype}}" name = "filetype">
+          </td>
+          <td><input type="text" class = "input" name="AttValue" required></td>
+          <td><select id = "foo" name = newAttrType value = "Select Attribute Type">
+        <option value="NUMBER">NUMBER</option>
+         <option value="NAME">NAME</option>
+         <option value="IPv4">IPv4</option>
+        <option value="FILE_PATH">FILE_PATH</option>
+         <option value="YES/NO">YES/NO</option>
+         <option value="IPv6">IPv6</option>
+    </select>
+
+          </td>
+
+        <td>
+      <input type="submit" value="Insert into File"></td>
+
+          </tr>
+     </form>
+    </table>
+
+
+    <style>
+         input {
+         color: green;
+         }
+     </style>
+
+
+ {{ toastr.include_toastr_js() }}
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var scrollpos = sessionStorage.getItem('scrollpos');
+        if (scrollpos) {
+            window.scrollTo(0, scrollpos);
+            sessionStorage.removeItem('scrollpos');
+        }
+    });
+
+    window.addEventListener("beforeunload", function (e) {
+        sessionStorage.setItem('scrollpos', window.scrollY);
+    });
+</script>
+{% endif %}
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+<script>
+      function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+      }
+      function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+      }
+    </script>
+
+
+  </body>
+</html>

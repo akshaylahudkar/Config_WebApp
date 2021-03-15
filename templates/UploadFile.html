@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {{ toastr.include_jquery() }}
+    {{ toastr.include_toastr_css() }}
+    {{ toastr.message() }}
+    <meta charset="UTF-8">
+    <title>Comparison  Check</title>
+    <style>
+
+    html
+    {
+    position: relative;
+    min-height: 100%;
+    }
+
+    body {
+  font-family: "Lato", sans-serif;
+}
+.rectangle{
+padding-top: 10px;
+  width:500px;
+  height:150px;
+  border-radius: 0.8rem;
+  border:2px solid #1abc9c;
+  position: center;
+  text-align: center;
+}
+#inp {
+  text-align: center;
+  margin: auto;
+}
+label {
+  background-color: #1abc9c;
+  color: white;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
+
+}
+
+/* Darker background on mouse-over */
+label:hover{
+  background-color: #0f705d;
+}
+
+#file-chosen{
+  margin-left: 0.3rem;
+  font-family: sans-serif;
+}
+</style>
+
+     <style>
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      margin-left:auto;
+      margin-right:auto;
+      width: 50%;
+      backdrop-filter: blur(10px)
+    }
+
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    #customers tr:nth-child(odd){background-color: #faebd7;}
+
+    #customers tr:hover {background-color: #ddd;}
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #1abc9c;
+      color: white;
+    }
+    .button {
+  background-color: #1abc9c; /* Green */
+  border: none;
+  color: white;
+  cursor: pointer;
+   border-radius: 0.3rem;
+  padding: 15px 32px;
+  text-align: center;
+  font-family: sans-serif;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+
+
+
+}
+
+.button:hover , .buttonUp:hover{
+  background-color: #0f705d;
+  }
+
+   footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #2F4F4F;
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+.wrapper {
+  display: inline-block;
+}
+
+</style>
+
+</head>
+<body style="background-color:white;">
+<div id = 'inp' class="rectangle"><h3>Please upload a file for Comparison!!!</h3>
+<p></p>
+    <div class = "wrapper">
+    <form id = "upform1"action="{{ url_for('savefile') }}" method="POST" enctype="multipart/form-data"> <!-- Requried to get file with Data-->
+
+<input type="file" id="actual-btn" name = 'file' accept=".cfg, .config" required hidden/>
+<label for="actual-btn"><strong><i class="fa fa-upload"></i> Upload File</strong></label>
+<span id="file-chosen">No file chosen</span>
+ <input type="hidden" value = "{{filetype}}" name = "filetype">
+    <p></p>
+    <br>
+    <input type="submit" id = "actual-btn1" value="update" hidden/>
+    <label for="actual-btn1"><strong>Compare File with {{filetype}}</strong></label>
+    </form>
+
+    </div>
+
+</div>
+<form method = "GET" method="POST" action="./display">
+    <input type="submit" id = "homebtn" value="" hidden/>
+     <label for="homebtn"><strong><i class="fa fa-home"></i> Home</strong></label>
+</form>
+
+
+<hr>
+{%if savefileFlag != "True" %}
+
+
+
+{% endif %}
+
+{%if savefileFlag == "True" %}
+
+<h3 align="center"><u>Comparison Results for {{filetype}}</u></h3>
+
+
+<h3 align="center">New Parameters</h3>
+
+    <table id = "customers">
+
+        <thead>
+        <th>Parameter Name</th>
+        <th>Default Value</th>
+        <th>New Value</th>
+        <th>Value Type</th>
+        <th>Commit</th>
+        </thead>
+            {%for j in  added_elements %}
+
+      <tr>
+          <td>
+              {{j[0][0]}}
+              <input type="hidden" value = "{{filetype}}" name = "filetype">
+          </td>
+          <td>
+              {{j[0][1]}}
+          </td>
+         <form method="POST" method = "GET" action="./addtoDBCompare" style="display: inline">
+          <td>
+
+                <input type="hidden" value = "{{filetype}}" name = "filetype">
+               <input type="hidden" value="{{j[0][0]}}" name="AttName">
+                {% if j[0][0] == '#' %}
+                 <input type="hidden" value="{{j[0][0]}}" name="newAttValue" >
+                {% endif %}
+                {% if j[0][0] != '#' %}
+                 <input type="text" class="input" value="{{j[0][1]}}" name="newAttValue" required>
+                {% endif %}
+            </td>
+
+          <td><select id = "foo" name = "newAttrType" value = "Select Attribute Type" required>
+              <option value="">Please Select Type</option>
+        <option value="NUMBER">NUMBER</option>
+         <option value="NAME">NAME</option>
+               <option value = "DATE">DATE</option>
+         <option value="IPv4">IPv4</option>
+        <option value="FILE_PATH">FILE_PATH</option>
+         <option value="YES/NO">YES/NO</option>
+         <option value="IPv6">IPv6</option>
+              <option value="Not Available">Not Available</option>
+   </select>
+
+          </td>
+            <td>
+                    {% if j[0][0] == '#' %}
+                 <input type="hidden" value="Update" style="display: inline" >
+                {% endif %}
+                {% if j[0][0] != '#' %}
+                 <input type="submit" value="Add to File" style="display: inline" >
+                {% endif %}
+
+                </td>
+          </form>
+          </tr>
+            {% endfor %}
+
+
+    </table>
+
+
+<h3 align="center">Removed Parameters</h3>
+
+    <table id = "customers">
+        <thead>
+        <th>Parameter Name</th>
+        <th>Parameter Value</th>
+        <th>Remove</th>
+
+        </thead>
+            {% for i in removed_elements %}
+      <tr>
+
+          <td>
+
+              {{i[0][0]}}
+              <input type="hidden" value = "{{filetype}}" name = "filetype">
+          </td>
+
+          <td>{{i[0][1]}} </td>
+
+           <td>
+            <form method="POST" action="./delete_Compare" style="display: inline">
+                 <input type="hidden" value = "{{filetype}}" name = "filetype">
+              <input type="hidden" value="{{i[0][0]}}" name="AttName">
+              <input type="submit" value="Delete">
+            </form>
+
+          </td>
+      </tr>
+            {% endfor %}
+
+
+    </table>
+<p></p>
+ <form id = "newform" method = "GET" method="POST" action="./display">
+    <div style="text-align:center;">
+        <button class="button" form="newform"> <strong><i class="fa fa-eye"></i> View Modified File</strong></button>
+    </div>
+    </form>
+<p></p>
+<br>
+<p></p>
+<br>
+<p></p>
+<br>
+
+
+
+{% endif %}
+{{ toastr.include_toastr_js() }}
+<div class="sub_div">
+  <footer>
+   <p>©2021 Tata Consultancy Services Limited. All Rights Reserved.</p>
+  <!--p>Designed By: Siddhant Jain | Akshay Lahudkar</p-->
+  <a href="https://www.tcs.com" style="color: white">Visit Us @ www.tcs.com</a>
+</footer>
+    </div>
+</body>
+<script type = "text/javascript">
+const actualBtn = document.getElementById('actual-btn');
+
+const fileChosen = document.getElementById('file-chosen');
+
+actualBtn.addEventListener('change', function(){
+  fileChosen.textContent = this.files[0].name
+})
+</script>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Download File</title>
+</head>
+<style>
+    html
+    {
+    position: relative;
+    min-height: 100%;
+    }
+    body {
+  font-family: "Lato", sans-serif;
+}
+</style>
+
+<style>
+     .button {
+   background-color: #1abc9c; /* Green */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  margin-bottom : 50px;
+  position: absolute;
+}
+ .button:hover{
+  background-color: #0f705d;
+}
+
+ footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #2F4F4F;
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+
+ </style>
+<body>
+{% block javascript %}
+	<script>
+
+	data = JSON.parse({{ data | tojson }})
+	filename = JSON.parse({{ filename | tojson }})
+    var text=data;
+    var file_name=filename + ".cfg"
+    console.log();
+
+    function download(filename, text) {
+
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+
+download(file_name,text)
+
+
+// Start file download.
+document.getElementById("dwn-btn").addEventListener("click", function(){
+    // Generate download of hello.txt file with some content
+    var text = document.getElementById("text-val").value;
+    var filename = "hello.txt";
+    console.log(text);
+    download(filename, text);
+}, false);
+
+// Start file download.
+
+
+
+    </script>
+
+
+{% endblock %}
+
+
+<h2>Config file has been downloaded successfully</h2>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<form action="./display" id = "displayForm">
+<button class="button" form="displayForm"><b><i class="fa fa-home"> Home</i></b></button>
+</form>
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+  <div class="sub_div">
+  <footer>
+   <p>©2021 Tata Consultancy Services Limited. All Rights Reserved.</p>
+  <!--p>Designed By: Siddhant Jain | Akshay Lahudkar</p-->
+  <a href="https://www.tcs.com" style="color: white">Visit Us @ www.tcs.com</a>
+</footer>
+    </div>
+
+</body>
+</html>
