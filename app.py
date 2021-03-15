@@ -10,7 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_toastr import Toastr
 from flask import flash
 from switch import Validation
-import pandas as pd
+
 sys.path.insert(0, '../..')
 
 
